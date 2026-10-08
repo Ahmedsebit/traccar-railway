@@ -1,7 +1,7 @@
 # Carribu Traccar service
 
-Deploy this directory as a separate Railway service with **Root Directory**
-set to `/traccar`.
+Deploy this repository as a separate Railway service. Leave **Root Directory**
+blank so Railway detects the root `Dockerfile`.
 
 ## Railway variables
 
