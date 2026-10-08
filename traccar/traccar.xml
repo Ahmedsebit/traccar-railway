@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE properties SYSTEM 'http://java.sun.com/dtd/properties.dtd'>
+<properties>
+
+    <!--
+      Secrets and URLs are NOT stored here. They come from Railway variables,
+      because CONFIG_USE_ENVIRONMENT_VARIABLES=true lets env vars override
+      these keys (database.url -> DATABASE_URL, forward.url -> FORWARD_URL, ...).
+    -->
+
+    <!-- Database (values overridden by Railway variables) -->
+    <entry key='database.driver'>org.postgresql.Driver</entry>
+    <entry key='database.url'>jdbc:postgresql://localhost:5432/traccar</entry>
+    <entry key='database.user'>postgres</entry>
+    <entry key='database.password'></entry>
+
+    <!-- Web dashboard + REST API -->
+    <entry key='web.port'>8082</entry>
+
+    <!-- Tracker protocol: Coban (TK103/TK303 family) -->
+    <entry key='gps103.port'>5001</entry>
+
+    <!-- Forward every position to the backend as JSON -->
+    <entry key='forward.enable'>true</entry>
+    <entry key='forward.type'>json</entry>
+    <entry key='forward.url'>http://localhost/tracker/position</entry>
+
+    <!-- Forward every alarm/event (SOS, door, ACC, shock, overspeed, power cut...) -->
+    <entry key='event.forward.enable'>true</entry>
+    <entry key='event.forward.url'>http://localhost/tracker/event</entry>
+
+    <!-- Logging: keep it in Railway's log viewer -->
+    <entry key='logger.console'>true</entry>
+
+</properties>
