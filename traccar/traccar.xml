@@ -6,6 +6,8 @@
       Secrets and URLs are NOT stored here. They come from Railway variables,
       because CONFIG_USE_ENVIRONMENT_VARIABLES=true lets env vars override
       these keys (database.url -> DATABASE_URL, forward.url -> FORWARD_URL, ...).
+      FORWARD_HEADER and EVENT_FORWARD_HEADER must carry the backend's shared
+      TRACKER_WEBHOOK_TOKEN.
     -->
 
     <!-- Database (values overridden by Railway variables) -->
@@ -24,10 +26,14 @@
     <entry key='forward.enable'>true</entry>
     <entry key='forward.type'>json</entry>
     <entry key='forward.url'>http://localhost/tracker/position</entry>
+    <entry key='forward.header'></entry>
+    <entry key='forward.retry.enable'>true</entry>
 
     <!-- Forward every alarm/event (SOS, door, ACC, shock, overspeed, power cut...) -->
     <entry key='event.forward.enable'>true</entry>
+    <entry key='event.forward.type'>json</entry>
     <entry key='event.forward.url'>http://localhost/tracker/event</entry>
+    <entry key='event.forward.header'></entry>
 
     <!-- Logging: keep it in Railway's log viewer -->
     <entry key='logger.console'>true</entry>
