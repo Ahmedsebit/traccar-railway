@@ -12,6 +12,11 @@ CONFIG_USE_ENVIRONMENT_VARIABLES=true
 DATABASE_URL=jdbc:postgresql://${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/traccar
 DATABASE_USER=${{Postgres.PGUSER}}
 DATABASE_PASSWORD=${{Postgres.PGPASSWORD}}
+PGHOST=${{Postgres.PGHOST}}
+PGPORT=${{Postgres.PGPORT}}
+PGUSER=${{Postgres.PGUSER}}
+PGPASSWORD=${{Postgres.PGPASSWORD}}
+TRACCAR_DATABASE_NAME=traccar
 FORWARD_URL=http://${{backend.RAILWAY_PRIVATE_DOMAIN}}:5000/tracker/position
 EVENT_FORWARD_URL=http://${{backend.RAILWAY_PRIVATE_DOMAIN}}:5000/tracker/event
 FORWARD_HEADER=Authorization: Bearer ${{backend.TRACKER_WEBHOOK_TOKEN}}
@@ -21,11 +26,23 @@ EVENT_FORWARD_HEADER=Authorization: Bearer ${{backend.TRACKER_WEBHOOK_TOKEN}}
 The backend service must define a long random `TRACKER_WEBHOOK_TOKEN`. No secret
 is stored in this repository.
 
-Create a separate PostgreSQL database before deploying:
+## Database pre-deploy initialization
 
-```sql
-CREATE DATABASE traccar;
+Set the Railway **Pre-deploy Command** to:
+
+```sh
+/opt/traccar/init-db.sh
 ```
+
+The script connects to PostgreSQL's maintenance database, creates `traccar`
+only when it does not already exist, and succeeds safely on later deployments.
+Traccar creates and migrates all required `tc_*` tables when the application
+starts. Do not maintain a separate table-creation script because the schema is
+version-specific and owned by Traccar.
+
+The PostgreSQL user referenced by `PGUSER` must have permission to create a
+database. If database creation is denied, create `traccar` once through the
+PostgreSQL Data tab instead.
 
 ## Networking
 
