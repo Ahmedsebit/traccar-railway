@@ -36,6 +36,8 @@ Set the Railway **Pre-deploy Command** to:
 
 The script connects to PostgreSQL's maintenance database, creates `traccar`
 only when it does not already exist, and succeeds safely on later deployments.
+The container also runs this initializer at startup as a fallback, so a missing
+or skipped Railway pre-deploy command does not cause Traccar to crash.
 Traccar creates and migrates all required `tc_*` tables when the application
 starts. Do not maintain a separate table-creation script because the schema is
 version-specific and owned by Traccar.

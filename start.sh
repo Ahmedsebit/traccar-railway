@@ -11,6 +11,8 @@ for variable in PGHOST PGPORT PGUSER PGPASSWORD; do
   fi
 done
 
+/opt/traccar/init-db.sh
+
 export CONFIG_USE_ENVIRONMENT_VARIABLES=true
 export DATABASE_URL="jdbc:postgresql://${PGHOST}:${PGPORT}/${DATABASE_NAME}"
 export DATABASE_USER="$PGUSER"
