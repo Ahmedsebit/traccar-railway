@@ -8,10 +8,6 @@ blank so Railway detects the root `Dockerfile`.
 Replace `Postgres` and `backend` if your Railway services use different names:
 
 ```properties
-CONFIG_USE_ENVIRONMENT_VARIABLES=true
-DATABASE_URL=jdbc:postgresql://${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/traccar
-DATABASE_USER=${{Postgres.PGUSER}}
-DATABASE_PASSWORD=${{Postgres.PGPASSWORD}}
 PGHOST=${{Postgres.PGHOST}}
 PGPORT=${{Postgres.PGPORT}}
 PGUSER=${{Postgres.PGUSER}}
@@ -22,6 +18,10 @@ EVENT_FORWARD_URL=http://${{backend.RAILWAY_PRIVATE_DOMAIN}}:5000/tracker/event
 FORWARD_HEADER=Authorization: Bearer ${{backend.TRACKER_WEBHOOK_TOKEN}}
 EVENT_FORWARD_HEADER=Authorization: Bearer ${{backend.TRACKER_WEBHOOK_TOKEN}}
 ```
+
+The startup script builds Traccar's `DATABASE_URL`, `DATABASE_USER`, and
+`DATABASE_PASSWORD` from these `PG*` variables. Do not add public proxy
+connection values or duplicate `DB_*` variables to the Traccar service.
 
 The backend service must define a long random `TRACKER_WEBHOOK_TOKEN`. No secret
 is stored in this repository.
