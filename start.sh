@@ -11,6 +11,37 @@ for variable in PGHOST PGPORT PGUSER PGPASSWORD; do
   fi
 done
 
+case "${GEOLOCATION_ENABLE:-false}" in
+  false) ;;
+  true)
+    case "${GEOLOCATION_KEY:-}" in
+      *[![:space:]]*) ;;
+      *)
+        echo "GEOLOCATION_KEY is required when GEOLOCATION_ENABLE=true." >&2
+        exit 1
+        ;;
+    esac
+    case "${GEOLOCATION_MCC:-}" in
+      [1-9][0-9][0-9]) ;;
+      *)
+        echo "GEOLOCATION_MCC must be the tracker's three-digit mobile country code." >&2
+        exit 1
+        ;;
+    esac
+    case "${GEOLOCATION_MNC:-}" in
+      [0-9]|[0-9][0-9]|[0-9][0-9][0-9]) ;;
+      *)
+        echo "GEOLOCATION_MNC must be the tracker's one-to-three-digit mobile network code." >&2
+        exit 1
+        ;;
+    esac
+    ;;
+  *)
+    echo "GEOLOCATION_ENABLE must be true or false." >&2
+    exit 1
+    ;;
+esac
+
 /opt/traccar/init-db.sh
 
 export CONFIG_USE_ENVIRONMENT_VARIABLES=true

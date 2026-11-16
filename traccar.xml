@@ -22,6 +22,12 @@
     <!-- Tracker protocol: Coban (TK103/TK303 family) -->
     <entry key='gps103.port'>5001</entry>
 
+    <!-- Opt-in LBS fallback. Supply the key and carrier codes through Railway variables. -->
+    <entry key='geolocation.enable'>false</entry>
+    <entry key='geolocation.type'>google</entry>
+    <entry key='geolocation.processInvalidPositions'>true</entry>
+    <entry key='geolocation.reuse'>true</entry>
+
     <!-- Forward every position to the backend as JSON -->
     <entry key='forward.enable'>true</entry>
     <entry key='forward.type'>json</entry>
